@@ -15,5 +15,14 @@
     "express": "^4.17.2",
     "mongoose": "^6.1.8",
     "nodemon": "^2.0.15"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Autobotbrain/booking-system-api.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Autobotbrain/booking-system-api/issues"
+  },
+  "homepage": "https://github.com/Autobotbrain/booking-system-api#readme"
 }
