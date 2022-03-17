@@ -37,9 +37,7 @@ router.post('/signup',(request,response) => {
                     signUpTemplateCopy.create(signedUpUser)
                         .then(user=>{
                             response.json({status:user.email+"register successfull!"})
-                                .catch(err=>{
-                                    response.send("error"+err);
-                                })
+                            
                         })
                 })
             }else{
