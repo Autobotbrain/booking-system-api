@@ -7,10 +7,10 @@ bookingRoutes.route('/add').post(function (req,res){
     let bookings=new Bookings(req.body)
     bookings.save()
         .then(bookings=>{
-            res.status(200).json({'bookings':'Booking was aded'})
+            res.status(200).json({bookings:'Booking was aded'})
         })
         .catch(err=>{
-            res.status(400).send("Unable to add booking")
+            res.status(400).send("Unable to add booking"+err)
         })
 })
 

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 const Bookings = new mongoose.Schema({
-    driver_name:{
+    time:{
         type:String,
         required:true
     },
@@ -13,7 +13,7 @@ const Bookings = new mongoose.Schema({
         type:String,
         required:true
     },
-    Date:{
+    Date_Time:{
         type:Date,
         default:Date.now
     },//pickup,destination,rent,pickup time

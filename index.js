@@ -35,6 +35,7 @@ app.post('/upload',(req,res)=>{
     }
     const file =req.files.file;
     console.log(__dirname)
+
     file.mv(`models/uploads/${file.name}`,err=>{
         if(err){
             console.error(err);
@@ -42,6 +43,8 @@ app.post('/upload',(req,res)=>{
         }
         res.json({fileName:file.name,filePath:`/uploads/${file.name}`})
     })
+    
+    
 
 })
 
