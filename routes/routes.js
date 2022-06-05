@@ -4,29 +4,11 @@ const express =require('express')
 const router = express.Router()
 const signUpTemplateCopy = require('../models/SignupModules')
 
-//New user update
-router.post('/signup',(request,response) => {
-    const signedUpUser = new signUpTemplateCopy({
-        VehicleOwner:request.body.VehicleOwner,
-        VehicleModel:request.body.VehicleModel,
-        VehicleNumber:request.body.VehicleNumber,
-        Type:request.body.Type,
-        Seats:request.body.Seats,
-        ID:request.body.ID,
-        MNumber:request.body.MNumber,
-        email:request.body.email,
-        password:request.body.password,
-        Date:request.body.Date
-    })
+const AnnoController = require("../Controllers/Anno-Controller");
 
-    signedUpUser.save()
-    .then(data => {
-        response.json(data)
-    })
-    .catch(error => {
-        response.json(error)
-    })
-})
+
+
+
 //Get all user Deatils
 router.get('/signup',(req, res) => {
     // signUpTemplateCopy.find
@@ -57,6 +39,7 @@ router.get('/signup',(req, res) => {
 })
 
 //Update User
+
 router.put('/signup/:id',(req, res) => {
     if(!req.body){
         return res
@@ -103,4 +86,16 @@ router.delete('/signup/:id',(req,res) => {
 })
 // router.get('/signup')
 
+
+//Announsment
+router.get("/AddNewAnno", AnnoController.getAllAnnounsments);
+router.get("/AddNewAnno/:id", AnnoController.getById);
+router.post("/AddNewAnno", AnnoController.addAnnounsment);
+router.put("/AddNewAnno/:id", AnnoController.UpdateAnnounsment);
+
+//Delete
+router.delete("/AddNewAnno/:id", AnnoController.deleteAnnounsment);
+
+ 
+   
 module.exports = router
