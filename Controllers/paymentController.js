@@ -1,6 +1,4 @@
-const payment = require("../models/payment");
 const Payment = require("../models/payment");
-const SignupModules = require("../models/SignupModules");
 
 //Read(get)
 const getAllPayment = async(req, res, next) =>{
