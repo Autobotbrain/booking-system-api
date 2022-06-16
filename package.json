@@ -1,19 +1,22 @@
 {
-  "name": "signupbacknd",
+  "name": "cab_service_app",
   "version": "1.0.0",
-  "description": "Sign Up Application",
+  "description": "nothing",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "nodemon ./index.js"
   },
-  "author": "Team 17",
+  "keywords": [
+    "texiapp"
+  ],
+  "author": "Adefer",
   "license": "ISC",
   "dependencies": {
-    "bcrypt": "^5.0.1",
-    "cors": "^2.8.5",
-    "dotenv": "^14.3.2",
-    "express": "^4.17.2",
-    "mongoose": "^6.1.8",
-    "nodemon": "^2.0.15"
+    "body-parser": "^1.20.0",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.3.6",
+    "nodemon": "^2.0.16"
   }
 }

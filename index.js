@@ -1,28 +1,44 @@
-const express = require('express');
+const express = require("express");
 const app = express();
-const mongoose = require('mongoose');
-const dotenv =require('dotenv');
-const routesUrls =require('./routes/parent.js');
-const cors = require('cors');
+const mongoose = require("mongoose");
+const routes = require("./routes.index");
 
-dotenv.config();
+// load .env file in to  bash
+require("dotenv").config();
 
-mongoose.connect(process.env.DATABASE_ACCESS, () => {
-  return console.log("Database connected")
+//get
+var bodyParser = require("body-parser");
+app.use(bodyParser.json());
+
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+  );
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE");
+
+  next();
 });
 
-app.use(express.json());
-app.use(cors());
-app.use('/parent',  routesUrls);
+// reg routing table
 
-const PORT = process.env.PORT || 3001;
-app.listen(PORT, () => {
-    console.log(`Server listening on ${PORT}`);
-  });
-console.log(process.env.DATABASE_ACCESS)
+app.use("/api/", routes);
+app.get('/web',(req,res)=>{
+  res.send("<h1>Hello wordld</h1>")
+})
 
+// COnnect to db server
+mongoose.connect(process.env.DATABASE_URL, {
+  useNewUrlParser: true,
+});
+var db = mongoose.connection;
 
+db.on("error", console.error.bind(console, "connection error:"));
 
-
-var parentRouter = require('./routes/parent.js');
-app.use('/parent',parentRouter);
+db.once("open", function () {
+  console.log("Connection Successful!");
+  app.listen(process.env.PORT, () =>
+    console.log(`Example app listening on port ${process.env.PORT}!`)
+  );
+});
