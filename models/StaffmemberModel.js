@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const signUpTemplate = new mongoose.Schema({
+const Staffmember = new mongoose.Schema({
     firstName:{
         type:String,
         required:true
@@ -13,14 +13,6 @@ const signUpTemplate = new mongoose.Schema({
         type:Number,
         required:true
     },
-    email:{
-        type:String,
-        required:true
-    },
-    password:{
-        type:String,
-        required:true
-    },
     nic:{
         type:String,
         required:true
@@ -29,7 +21,15 @@ const signUpTemplate = new mongoose.Schema({
         type:String,
         required:true
     },
-    company:{
+    email:{
+        type:String,
+        required:true
+    },
+    password:{
+        type:String,
+        required:true
+    },
+    confirmPassword:{
         type:String,
         required:true
     },
@@ -39,4 +39,4 @@ const signUpTemplate = new mongoose.Schema({
     },
 })
 
-module.exports = mongoose.model('staffmember',signUpTemplate)
+module.exports = mongoose.model('staffmembers',Staffmember)
