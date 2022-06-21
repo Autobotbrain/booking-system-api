@@ -8,6 +8,7 @@ const cors = require('cors')
 const fileUpload=require('express-fileupload')
 const bodyParser=require('body-parser')
 const bookingRoutes=require('./routes/booking')
+const UserRoute = require('./routes/vehicleownerRoute')
 
 
 dotenv.config()
@@ -17,7 +18,7 @@ mongoose.connect(process.env.DATABASE_ACCESS, () => console.log("Database connec
 app.use(express.json())
 app.use(cors())
 app.use('/app',  routesUrls)
-app.listen(5000, () => console.log("server is up and running port 5000"))
+app.listen(4000, () => console.log("server is up and running port 4000"))
 
 
 app.use(bodyParser.json())
@@ -25,7 +26,7 @@ app.use(bodyParser.urlencoded({extended:false}))
 
 app.use('/bookings',bookingRoutes)
 //app.use('/payment',bookingRoutes)
-//app.use('/vehicle',bookingRoutes)
+app.use('/VehicleOwner',UserRoute)
 //app.use('/resovation',bookingRoutes)
 app.use(fileUpload())
 
@@ -50,7 +51,8 @@ app.post('/upload',(req,res)=>{
 
 const corsOptions={
     origin:'*',
-    optionSuccessStatus:200
+    optionSuccessStatus:200,
+    
 }
 
 app.use(cors(corsOptions))

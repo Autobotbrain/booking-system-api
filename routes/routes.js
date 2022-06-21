@@ -5,7 +5,7 @@ const jwt =require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 
 const {Error} =require('mongoose')
-const signUpTemplateCopy = require('../models/SignUpModules')
+const signUpTemplateCopy = require('../models/Vehicleowner')
 router.use(cors())
 process.env.SECRET_KEY = 'secret'
 
@@ -51,22 +51,36 @@ router.post('/signup',(request,response) => {
 });
 
 router.post('/login',(request,response)=>{
+    
     signUpTemplateCopy.findOne({
         email:request.body.email
     })
         .then(user=>{
+            console.log(request.body)
             if(user){
                 if(bcrypt.compareSync(request.body.password,user.password)){
-                    const payload={
-                        _id:user._id,
-                        first_name:user.first_name,
-                        last_name:user.last_name,
-                        email:user.email
+
+                    if(user.tag=="vehicle"){
+                        const payload={
+                            _id:user._id,
+                            email:user.email,
+                            VehicleOwner:user.VehicleOwner,
+                            VehicleModel:user.VehicleModel,
+                            Type:user.Type,
+                            Seats:user.Seats,
+                            ID:user.ID,
+                            MNumber:user.MNumber,
+                            Date:user.Date,
+                            tag:user.tag
+    
+                        }
+                        let token =jwt.sign(payload,process.env.SECRET_KEY,{
+                            expiresIn :1440
+                        })
+                        response.send(token)
                     }
-                    let token =jwt.sign(payload,process.env.SECRET_KEY,{
-                        expiresIn :1440
-                    })
-                    response.send(token)
+                    
+                    
                     // response.send({payload})
                 }else{
                     response.json({error:"User does not exist!"})
@@ -76,7 +90,7 @@ router.post('/login',(request,response)=>{
             }
         })
             .catch(err=>{
-                response.send("error occured "+err)
+                response.send("error occured :"+err)
             })
 })
 
