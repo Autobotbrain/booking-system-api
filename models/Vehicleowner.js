@@ -43,6 +43,10 @@ const VehicleownerSchema = new Schema({
         type:Date,
         default:Date.now
     },
+    tag:{
+        type:String,
+        required:true
+    }
 })
 
 module.exports = mongoose.model('Vehicleowners',VehicleownerSchema)

@@ -37,7 +37,7 @@ const deleteUser = async(req,res,next)=>{
 //Create(put)
 const addUser = async(req,res,next) => {
     
-    const { VehicleOwner,VehicleModel,VehicleNumber,Type,Seats,ID,MNumber,email,password,Date} = req.body;
+    const { VehicleOwner,VehicleModel,VehicleNumber,Type,Seats,ID,MNumber,email,password,Date,tag} = req.body;
     let anno;
     try{
         anno = new User({
@@ -50,9 +50,11 @@ const addUser = async(req,res,next) => {
             MNumber,
             email,
             password,
-            Date
+            Date,
+            tag
         });
         await anno.save()
+        console.log(anno)
     } 
     catch(err){ 
         console.log(err);
@@ -71,11 +73,27 @@ const addUser = async(req,res,next) => {
 
 
 //Get by id
-const getByUserId = async (req,res, next) => {
-    const id = req.params.id;
+// const getByUserId = async (req,res, next) => {
+//     const id = req.params.id;
+//     let anno;
+//     try{
+//         anno = await User.findById(id);
+//     }
+//     catch{
+//         console.log(err);
+//     }
+
+//     if(!anno){
+//         return  res.status(404).json({message: "No Book found"});
+//     }
+//     return res.status(200).json({anno})
+
+// }
+const getByUserModel = async (req,res, next) => {
+    const model = req.params.VehicleModel;
     let anno;
     try{
-        anno = await User.findById(id);
+        anno = await User.find({VehicleModel:model});
     }
     catch{
         console.log(err);
@@ -123,4 +141,4 @@ const UpdateUser = async(req, res, next)=>{
 
 
 
-module.exports = {getAllUsers,deleteUser,addUser,getByUserId,UpdateUser};
+module.exports = {getAllUsers,deleteUser,addUser,getByUserModel,UpdateUser};
