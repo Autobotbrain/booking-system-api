@@ -146,7 +146,76 @@ const UpdateUser = async(req, res, next)=>{
     
 }
 
+const allowUpdateUser = async(req, res, next)=>{
+    const id = req.params.id;
+    const { VehicleOwner,VehicleModel,VehicleNumber,Type,Seats,ID,MNumber,email,password,Date} = req.body;
+    let anno;
+    try{
+        anno = await User.findByIdAndUpdate(id,{
+            //feelds that need to update
+            VehicleOwner,
+            VehicleModel,
+            VehicleNumber,
+            Type,
+            Seats,
+            ID,
+            MNumber,
+            email,
+            password,
+            Date,
+            updateaccess:true
+        });
+        anno = await anno.save();
+    }
+    catch(err){
+        console.log(err);
+    }
+
+    if(!anno){
+        return res.status(404).json({message:"unable to update"});
+    }
+    return res.status(201).json({message:"Successfully Updated"});
+    
+}
 
 
+const getuserByNotValidation = async (req, res, next) => {
+    let catergory = req.body.catergory;
+    let validation = false;
+    console.log(catergory);
+    User.find({
+      updateaccess: validation,
+    }).exec((err, users) => {
+      if (err) {
+        return res.status(400).json({
+          error: err,
+        });
+      }
+      return res.status(200).json({
+        success: true,
+        noaccess: users,
+      });
+    });
+  };
 
-module.exports = {getAllUsers,deleteUser,addUser,getByUserId,UpdateUser};
+ const  getuserByValidation = async (req, res, next) => {
+    let catergory = req.body.catergory;
+    let validation = true;
+    console.log(catergory);
+    User.find({
+      updateaccess: validation,
+    }).exec((err, users) => {
+      if (err) {
+        return res.status(400).json({
+          error: err,
+        });
+      }
+      return res.status(200).json({
+        success: true,
+        noaccess: users,
+      });
+    });
+  };
+
+
+module.exports = {getAllUsers,deleteUser,addUser,getByUserId,UpdateUser,getuserByNotValidation,getuserByValidation,allowUpdateUser};

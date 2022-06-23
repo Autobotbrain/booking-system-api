@@ -11,6 +11,10 @@ const VehicleownerSchema = new Schema({
         type:String,
         required:true
     },
+    updateaccess:{
+        type:Boolean,
+        default:false,
+    },
     VehicleNumber:{
         type:String,
         required:true

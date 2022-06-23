@@ -9,7 +9,16 @@ const fileUpload=require('express-fileupload')
 const bodyParser=require('body-parser')
 const bookingRoutes=require('./routes/booking')
 const UserRoute = require('./routes/vehicleownerRoute')
+const annousmentRoutes = require('./routes/annousmentRoute')
+const paymentRoutes = require('./routes/paymentRoute')
+const feedbackRoute = require('./routes/feedbackRoute')
+const ordersRoute = require('./routes/ordersRoute')
+const viewordersRoute = require('./routes/viewbookingRoute')
+const CheckVehiclesRoute = require('./routes/ckeckvehiclesRoute')
+const GetPermissionRoute =require('./routes/PermissionRequest')
+const staffmemberRoute =require('./routes/StaffmemberRoutes')
 
+const Image = require("./models/Image")
 
 dotenv.config()
 
@@ -28,6 +37,18 @@ app.use('/bookings',bookingRoutes)
 //app.use('/payment',bookingRoutes)
 app.use('/VehicleOwner',UserRoute)
 //app.use('/resovation',bookingRoutes)
+app.use('/app',annousmentRoutes)
+app.use('/payment',paymentRoutes)
+app.use('/feedback',feedbackRoute)
+app.use('/orders',ordersRoute)
+
+app.use('/vieworders',viewordersRoute)
+app.use('/checkVehicles',CheckVehiclesRoute)
+app.use('/getPermissionRoute',GetPermissionRoute)
+app.use('/staffmemberRoute',  staffmemberRoute)
+
+
+
 app.use(fileUpload())
 
 app.post('/upload',(req,res)=>{
@@ -42,6 +63,10 @@ app.post('/upload',(req,res)=>{
             console.error(err);
             res.status(500).send(err)
         }
+        let img = new Image({
+            photo:`/uploads/${file.name}`
+        })
+        img.save();
         res.json({fileName:file.name,filePath:`/uploads/${file.name}`})
     })
     
