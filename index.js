@@ -18,6 +18,9 @@ const CheckVehiclesRoute = require('./routes/ckeckvehiclesRoute')
 const GetPermissionRoute =require('./routes/PermissionRequest')
 const staffmemberRoute =require('./routes/StaffmemberRoutes')
 
+const parentRoutes = require('./routes/parent');
+const DriverRoutes =require('./routes/DriverSignup');
+
 const Image = require("./models/Image")
 
 dotenv.config()
@@ -47,7 +50,8 @@ app.use('/checkVehicles',CheckVehiclesRoute)
 app.use('/getPermissionRoute',GetPermissionRoute)
 app.use('/staffmemberRoute',  staffmemberRoute)
 
-
+app.use('/DriverSignup',DriverRoutes);
+app.use('/parent', parentRoutes);
 
 app.use(fileUpload())
 

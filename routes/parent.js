@@ -1,111 +1,15 @@
 
 const express = require('express')
-const router = express.Router()
-const Parent = require('../models/parent');
+const router = require('express').Router()
+const ParentController = require("../Controllers/parentController");
 
-router.route('/signup').post((req, res) => {
+router.get("/signupDetails", ParentController.getAllUsers);
+router.get("/signupDetails/updatedeny", ParentController.getuserByNotValidation);
+router.get("/signupDetails/updateallow", ParentController.getuserByValidation);
+router.post("/signupDetails", ParentController.addUser);
+router.get("/signupDetails/:id", ParentController.getByUserId);
+router.put("/signupDetails/:id", ParentController.UpdateUser)
+router.put("/allowupdate/:id", ParentController.allowUpdateUser)
+router.delete("/signupDetails/:id", ParentController.deleteUser)
 
-  
-
-    const { 
-        firstName,
-        lastName,
-        email,
-        password,
-        confirmpassword,
-        nic,
-        address,
-        contactNumbers,
-        childName,
-        childSchool,
-     
-    } = req.body;
-
-
-    var newParent = new Parent({
-       
-        firstName,
-        lastName,
-        email,
-        password,
-        confirmpassword,
-        nic,
-        address,
-        contactNumbers,
-        childName,
-        childSchool,
-        
-      
-    });
-
-    newParent.save().then(() => {
-        res.json("Parent Added.");
-    }).catch((err) => {
-        res.send(err);
-    });
-})
-
-router.route('/').get((req, res) => {
-    Parent.find().then((parent) => {
-        res.json(parent);
-    }).catch((err) => {
-        res.send(err);
-    });
-})
-
-router.route('/update/:id').put((req, res) => {
-    var parentId = req.params.id;
-    const { 
-        firstName,
-        lastName,
-        email,
-        password,
-        confirmpassword,
-        nic,
-        address,
-        contactNumbers,
-        childName,
-        childSchool,
-      
-       
-    } = req.body;
-    var updateParent = {
-        firstName,
-        lastName,
-        email,
-        password,
-        confirmpassword,
-        nic,
-        address,
-        contactNumbers,
-        childName,
-        childSchool,
-    
-       
-    };
-    var update = Parent.findByIdAndUpdate(parentId, updateParent).then((update) => {
-        res.json(update);
-    }).catch((err) => {
-        res.send(err);
-    });
-})
-
-router.route('/delete/:id').delete((req, res) => {
-    var parentId = req.params.id;
-    Parent.findByIdAndDelete(parentId).then((parent) => {
-        res.json(parent);
-    }).catch((err) => {
-        res.send(err);
-    });
-})
-
-router.route('/:id').get((req, res) => {
-    var parentId = req.params.id;
-    Parent.findById(parentId).then((parent) => {
-        res.json(parent);
-    }).catch((err) => {
-        res.send(err);
-    });
-})
-
-module.exports = router;
+module.exports = router
