@@ -7,7 +7,6 @@ const path =require('path')
 const cors = require('cors')
 const fileUpload=require('express-fileupload')
 const bodyParser=require('body-parser')
-const bookingRoutes=require('./routes/booking')
 const UserRoute = require('./routes/vehicleownerRoute')
 const annousmentRoutes = require('./routes/annousmentRoute')
 const paymentRoutes = require('./routes/paymentRoute')
@@ -23,6 +22,8 @@ const DriverRoutes =require('./routes/DriverSignup');
 
 const Image = require("./models/Image")
 
+const LacationShare =require('./routes/LocationShareRoute');
+
 dotenv.config()
 
 mongoose.connect(process.env.DATABASE_ACCESS, () => console.log("Database connected")).catch(err=>console.log(err))
@@ -36,7 +37,7 @@ app.listen(4000, () => console.log("server is up and running port 4000"))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:false}))
 
-app.use('/bookings',bookingRoutes)
+
 //app.use('/payment',bookingRoutes)
 app.use('/VehicleOwner',UserRoute)
 //app.use('/resovation',bookingRoutes)
@@ -52,6 +53,8 @@ app.use('/staffmemberRoute',  staffmemberRoute)
 
 app.use('/DriverSignup',DriverRoutes);
 app.use('/parent', parentRoutes);
+
+app.use('/shareLocation', LacationShare);
 
 app.use(fileUpload())
 
